@@ -24,8 +24,8 @@ void b_sort(int *lst, int size)
 int main()
 {
     srand(time(NULL));
-    int *lst = malloc(200 * sizeof(int));
-    for (int i = 0; i < 200; i++)
+    int *lst = malloc(LSTSIZE * sizeof(int));
+    for (int i = 0; i < LSTSIZE; i++)
         lst[i] = rand() % (100 + 1);
 
     fprintf(stderr, "unsorted\n");
@@ -33,7 +33,7 @@ int main()
         fprintf(stderr, "\t%u\n", lst[i]);
 
     b_sort(lst, LSTSIZE);
-    fprintf(stderr, "unsorted\n");
+    fprintf(stderr, "sorted\n");
     for (int i = 0; i < LSTSIZE; i++)
         fprintf(stderr, "\t%u\n", lst[i]);
 }
