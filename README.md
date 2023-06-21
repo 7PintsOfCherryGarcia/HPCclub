@@ -21,3 +21,5 @@ make least_squares
 * Unit Index
   * least_squares
   * MC_pi
+
+# If you encounter a problem regarding the use of this repo please open a new issue
