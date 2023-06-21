@@ -10,7 +10,7 @@ Definitions of code for parameter computation should be placed in least_squares.
 Declarations should live in least_squares.h
 
 Compilation command:
-gcc -Wall -Wextra -pedantic -o simple_regression simple_regression.c least_squares.c kad_rand.c -lm
+gcc -Wall -Wextra -pedantic -g -o simple_regression simple_regression.c least_squares.c kad_rand.c -lm
 
 */
 
@@ -22,7 +22,7 @@ gcc -Wall -Wextra -pedantic -o simple_regression simple_regression.c least_squar
 #define maxX  10
 #define B0   .85
 #define B1     3
-#define NOISE .5
+#define NOISE  3
 
 #define PRINT_DATA 1
 
@@ -35,22 +35,23 @@ void print_data(float *x, float *y, unsigned int size)
 
 int main(int argc, char *argv[])
 {
+    float *x = 0, *y = 0;
     if (argc < 2) goto error;
     unsigned int npoints = atoi(argv[1]);
     if (npoints == 0) goto error;
 
     //Generate out independent variable
-    float *x = gen_independent(npoints, minX, maxX);
+    x = gen_independent(npoints, minX, maxX);
     if (!x) goto error;
     //From our independent variable, generate a response variable
     //given a linear model B0X + B1 + NOISE
-    float *y = gen_dependent(x, npoints, B0, B1, NOISE);
+    y = gen_dependent(x, npoints, B0, B1, NOISE);
     if (!y) goto error;
 
     if (PRINT_DATA) print_data(x, y, npoints);
 
     float estB0 = lm_genb0(x, y, npoints);
-    float estB1 = lm_genb1(x, y, npoints, B0);
+    float estB1 = lm_genb1(x, y, npoints, estB0);
 
     fprintf(stderr, "Slope (B0): %.4f\n", estB0);
     fprintf(stderr, "Intercept (B1): %.4f\n", estB1);
