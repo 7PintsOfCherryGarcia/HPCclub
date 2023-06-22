@@ -1,7 +1,15 @@
 #include <stdlib.h>
 #include "centroid.h"
+#include <math.h>
 
-
+float euc_s(float *p1, float *p2, unsigned int dim)
+{
+    float s = 0.0;
+    for (unsigned int i = 0; i < dim; i++){
+        s += (p1[i]-p2[i])*(p1[i]-p2[i]);
+    }
+    return sqrtf(s);
+}
 
 float *centroid(float *m, unsigned int dim, unsigned int n)
 {
