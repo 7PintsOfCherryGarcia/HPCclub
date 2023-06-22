@@ -6,3 +6,6 @@ all:MC_pi
 
 MC_pi:MC_pi.c
 	$(CC) $(CFLAGS) -o $@ $^ -lm
+
+clean:
+	rm -f MC_pi
