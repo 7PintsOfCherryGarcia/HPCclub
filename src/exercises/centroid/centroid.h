@@ -7,3 +7,6 @@ float *centroid(float *m, unsigned int dim, unsigned int n);
 
 //Compute all distances between N dim dimensional points and their centroid
 float *s2center(float *m, unsigned int dim, unsigned int n);
+
+//Compute distance between the centroids of two dim dimensional datasets
+float sbcenters(float *m1, unsigned int n1, float *m2, unsigned int n2, unsigned int dim);
