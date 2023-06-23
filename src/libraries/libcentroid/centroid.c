@@ -33,3 +33,11 @@ float *s2center(float *m, unsigned int dim, unsigned int n)
         s_vec[j++] = euc_s(m + i, center, dim);
     return s_vec;
 }
+
+float meanarray(float *m, unsigned int n)
+{
+    float avg = 0.0;
+    for (unsigned int i = 0; i < n; i++)
+        avg += m[i];
+    return avg/n;
+}
