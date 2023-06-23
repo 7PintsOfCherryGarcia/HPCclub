@@ -1,36 +1,64 @@
+/* Creates two clouds of 2 dimensional points with mean center X1, Y1 and X2, Y2.
+ * Optionally, the dataset is printed to stdout
+ *
+ * Objectives:
+ *   What is the average distance of each cloud of points to it's centroid?
+ *   What is the average distance of each cloud of points to the centroid of the
+ *      other cloud of points?
+ *   What is the centroid of the entire dataset?
+ *   What is the average distance of each point to the centroid of the entire dataset?
+ *   What is the distance between the centroids of each cloud?
+ */
+
+#include <stdio.h>
+#include <time.h>
 #include <stdlib.h>
-#include "centroid.h"
-#include <math.h>
+#include "libcentroid.h"
+#include "libkad_rand.h"
 
-float euc_s(float *p1, float *p2, unsigned int dim)
+#define X1  1.1f
+#define Y1  4.6f
+#define X2 -2.3f
+#define Y2  5.6f
+#define SDEV 1.0f
+#define PRINT_DATA 1
+
+void print_data(float *data1, float *data2, unsigned int n)
 {
-    float s = 0.0;
-    for (unsigned int i = 0; i < dim; i++){
-        s += (p1[i]-p2[i])*(p1[i]-p2[i]);
+    for (unsigned int i = 0; i < 2*n; i+= 2) {
+        fprintf(stdout, "%.4f\t%.4f\t%.4f\t%.4f\n", data1[i], data1[i+1],
+                                                    data2[i], data2[i+1]);
     }
-    return sqrtf(s);
 }
 
-float *centroid(float *m, unsigned int dim, unsigned int n)
+float *gen_data(float mean1, float mean2, float sdev, unsigned int n)
 {
-    float *c = calloc(dim, sizeof(float));
-    if (!c) return NULL;
-    for (unsigned int i = 0; i < n*dim; i+=dim) {
-        for (unsigned int j = 0; j < dim; j++)
-            c[j] += m[i + j];
+    float *data = malloc(2 * n * sizeof(float));
+    if (!data) return NULL;
+
+    for (unsigned int i = 0; i < 2*n; i+=2) {
+        data[i] = kad_drand_normal(NULL)*sdev + mean1;
+        data[i + 1] = kad_drand_normal(NULL)*sdev + mean2;
     }
-    for (unsigned int j = 0; j < dim; j++)
-        c[j] /= n;
-    return c;
+    return data;
 }
 
-float *s2center(float *m, unsigned int dim, unsigned int n)
+int main(int argc, char *argv[])
 {
-    float *s_vec = malloc(n * sizeof(float));
-    if (!s_vec) return NULL;
-    float *center = centroid(m, dim, n);
-    for (unsigned int i = 0; i < n*dim; i+=dim) {
-        s_vec[i] = euc_s(m + i, center, dim);
-    }
-    return s_vec;
+    int ret = 1;
+    if (argc < 2) return ret;
+    unsigned int npoints = atoi(argv[1]);
+    if ( 0 == npoints) return ret;
+    kad_srand(NULL, time(NULL));
+
+    float *data1 = gen_data(X1, Y1, SDEV, npoints);
+    float *data2 = gen_data(X2, Y2, SDEV, npoints);
+    if ( !data1 || !data2 ) goto exit;
+    if (PRINT_DATA) print_data(data1, data2, npoints);
+
+    ret = 0;
+    exit:
+        if (data1) free(data1);
+        if (data2) free(data2);
+        return ret;
 }
