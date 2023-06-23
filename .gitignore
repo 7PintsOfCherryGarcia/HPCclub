@@ -1,5 +1,7 @@
 PAT
 bin
 lib
-./src/exercises/MC_pi/MC_pi
-./src/exercises/least_squares/simple_regression
+include
+src/exercises/MC_pi/MC_pi
+src/exercises/least_squares/simple_regression
+src/exercises/centroid/centroid
