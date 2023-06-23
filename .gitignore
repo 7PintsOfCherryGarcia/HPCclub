@@ -1,4 +1,5 @@
 PAT
-./bin
+bin
+lib
 ./src/exercises/MC_pi/MC_pi
 ./src/exercises/least_squares/simple_regression
