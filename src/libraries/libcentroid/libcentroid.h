@@ -10,3 +10,6 @@ float *s2center(float *m, unsigned int dim, unsigned int n);
 
 //Compute distance between the centroids of two dim dimensional datasets
 float sbcenters(float *m1, unsigned int n1, float *m2, unsigned int n2, unsigned int dim);
+
+// Compute mean of an array of floats
+float meanarray(float *m, unsigned int n);
