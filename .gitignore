@@ -5,3 +5,5 @@ include
 src/exercises/MC_pi/MC_pi
 src/exercises/least_squares/simple_regression
 src/exercises/centroid/centroid
+*.o
+*.a
